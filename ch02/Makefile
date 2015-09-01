@@ -1,4 +1,4 @@
-all: function buffer buffer2 overflow serial shell 
+all: function buffer buffer2 overflow serial shell find_start
 
 function: Makefile
 	gcc -O0 -g -o function function.c
@@ -13,6 +13,7 @@ serial: Makefile serial.c
 shell: Makefile shell.c shellcode.c
 	gcc -O0 -fno-stack-protector -ggdb -o shell shell.c
 	gcc -O0 -fno-stack-protector -ggdb -o shellcode shellcode.c
-	
+find_start: Makefile find_start.c
+	gcc -O0 -fno-stack-protector -ggdb -o find-start find_start.c
 
 
